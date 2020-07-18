@@ -93,7 +93,7 @@
         /* START LOOP: for each active product */
         for(const active of activeProducts) {
           /* START: if the active product isn't the element of thisProduct */
-          if (active /= thisProduct.element) {
+          if (active != thisProduct.element) {
             /* remove class active for the active product */
             active.classList.remove(classNames.menuProduct.wrapperActive);
             /* END: if the active product isn't the element of thisProduct */
