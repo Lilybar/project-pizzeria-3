@@ -81,7 +81,7 @@
       const thisProduct = this;
 
       /* find the clickable trigger (the element that should react to clicking) */
-      const clickedButton = thisProduct.element.querySelector('product__header');
+      const clickedButton = thisProduct.element.querySelector(select.menuProduct.clickable);
       /* START: click event listener to trigger */
       clickedButton.addEventListener('click', function(event) {
         /* prevent default action for event */
