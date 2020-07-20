@@ -141,11 +141,11 @@
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form);
       console.log('formData', formData);
-      
+
       let price = thisProduct.data.price;
       /* start loop on all params */
-      for(let paramId of thisProduct.data.params){
-        const param = thisProduct.data.params(paramId);
+      for(let paramId in thisProduct.data.params){
+        const param = thisProduct.data.params[paramId];
         /* start loop on all params options */
         for(let optionId of param.options){
           const option = param.options(optionId);
@@ -153,17 +153,17 @@
           /* START IF: if option is selected and option is not default */
           if(optionSelected && !option.default){
             /* add price of option to variable price */
-            let fullPrice =  price + option.price;
-
+            let price =  price + option.price;
           /* END IF: if option is selected and option is not default */
           /* START ELSE IF: if option is not selected and option is default */
           } else if(!optionSelected && option.default){
             /* deduct price of option from price */
-            let fullPrice = price - option.price;
+            let price = price - option.price;
           }
         }
       }
-      thisProduct.priceElem.appendChild(price);
+      /* set the contents of thisProduct.priceElem to be the value of variable price */
+      thisProduct.data.price = price;
 
       console.log('processOrder:', this.processOrder);
     }
