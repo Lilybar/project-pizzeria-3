@@ -147,8 +147,8 @@
       for(let paramId in thisProduct.data.params){
         const param = thisProduct.data.params[paramId];
         /* start loop on all params options */
-        for(let optionId of param.options){
-          const option = param.options(optionId);
+        for(let optionId in param.options){
+          const option = param.options[optionId];
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
           /* START IF: if option is selected and option is not default */
           if(optionSelected && !option.default){
