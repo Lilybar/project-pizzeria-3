@@ -163,7 +163,7 @@
         }
       }
       /* set the contents of thisProduct.priceElem to be the value of variable price */
-      price = '<span class="price">' + price + '</span>';
+      thisProduct.priceElem = '<span class="price">' + price + '</span>';
       console.log(thisProduct.priceElem);
       console.log('processOrder:', this.processOrder);
     }
