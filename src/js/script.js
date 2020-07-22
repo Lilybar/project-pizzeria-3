@@ -62,10 +62,11 @@
       thisProduct.renderInMenu();
       thisProduct.getElements();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
       thisProduct.initAccordion();
       
-      console.log('new Product:', thisProduct);
+      //console.log('new Product:', thisProduct);
     }
     renderInMenu(){
       const thisProduct = this;
@@ -89,7 +90,8 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      console.log(thisProduct.priceElem);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+      //console.log(thisProduct.priceElem);
     }
 
     initAccordion(){
@@ -135,13 +137,19 @@
         event.preventDefault();
         thisProduct.processOrder();
       });
-      console.log('initOrferForm:', this.initOrderForm);
+      //console.log('initOrferForm:', this.initOrderForm);
     }
+    
+    initAmountWidget(){
+      const thisProduct = this;
 
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+    }
+    
     processOrder(){
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
+      //console.log('formData', formData);
 
       let price = thisProduct.data.price;
       /* start loop on all params */
@@ -162,7 +170,7 @@
             price = price - option.price;
           }
           const optionImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
-          console.log(optionImages);
+          //console.log(optionImages);
           if (optionSelected){
             for(let optionImage of optionImages){
               optionImage.classList.add(classNames.menuProduct.imageVisible);
@@ -178,20 +186,64 @@
       /* set the contents of thisProduct.priceElem to be the value of variable price */
       thisProduct.priceElem.innerHTML = price;
                 
-      console.log(thisProduct.priceElem);
+      //console.log(thisProduct.priceElem);
       console.log('processOrder:', this.processOrder);
     
     }
 
   }
-    
 
+  class AmountWidget {
+    constructor(element){
+      const thisWidget = this;
+
+      thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
+      console.log('AmountWidget:', thisWidget);
+      console.log('constructor arguments:', element);
+    }
+    
+    getElements(element){
+      const thisWidget = this;
+    
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+    
+    setValue(value){
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      /*TODO: Add validation */
+
+      thisWidget.value = newValue;
+      thisWidget.input.value = thisWidget.value;
+    }
+
+    initActions() {
+      const thisWidget = this;
+      thisWidget.dom.input.addEventListener('change', function () {
+        thisWidget.setValue(thisWidget.dom.input.value);
+      });
+      thisWidget.dom.linkDecrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value - 1);
+      });
+      thisWidget.dom.linkIncrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value + 1);
+      });
+    }
+  }
 
   const app = {
     initMenu: function (){
       const thisApp = this;
 
-      console.log('thisApp.data:', thisApp.data);
+      //console.log('thisApp.data:', thisApp.data);
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
       }
