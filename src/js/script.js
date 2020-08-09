@@ -340,9 +340,9 @@
       
       thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
     }
+
     initActions(){
       const thisCart = this;
-      thisCart.sendOrder();
 
       thisCart.dom.toggleTrigger.addEventListener('click', function(){
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
@@ -355,35 +355,11 @@
       });
       thisCart.dom.form.addEventListener('submit', function(){
         event.preventDefault();
+        thisCart.sendOrder();
       });
 
     }
-    sendOrder(){
-      const thisCart = this;
-      const url = settings.db.url + '/' + settings.db.order;
-
-      const payload = {
-        address: 'test',
-        totalPrice: thisCart.totalPrice,
-      };
-
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      };
-
-      fetch(url, options)
-        .then(function (response) {
-          return response.json();
-        }).then(function (parsedResponse) {
-          console.log('parsedResponse', parsedResponse);
-        });
-      
-    }
-
+    
     add(menuProduct){
       const thisCart = this;
 
@@ -404,7 +380,7 @@
       thisCart.subtotalPrice = 0;
   
       for (let product of thisCart.products) {
-        thisCart.subtotalPrice += thisCart.subtotalPrice + product.price;
+        thisCart.subtotalPrice += product.price;
         thisCart.totalNumber += thisCart.totalNumber + product.amount;
       }
       thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
@@ -425,7 +401,31 @@
       cartProduct.dom.wrapper.remove();
       thisCart.update();
     }
+  
+    sendOrder(){
+      const thisCart = this;
+      const url = settings.db.url + '/' + settings.db.order;
 
+      const payload = {
+        address: 'test',
+        totalPrice: thisCart.totalPrice,
+      };
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url, options)
+        .then(function(response){
+          return response.json();
+        }).then(function(parsedResponse){
+          console.log('parsedResponse', parsedResponse);
+        });
+    }
   }
   
   class CartProduct{
