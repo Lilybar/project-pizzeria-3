@@ -410,9 +410,9 @@
       const url = settings.db.url + '/' + settings.db.order;
 
       const payload = {
-        address: thisCart.dom.address,
+        address: thisCart.dom.address.value,
         totalPrice: thisCart.totalPrice,
-        phone: thisCart.dom.phone,
+        phone: thisCart.dom.phone.value,
         totalNumber: thisCart.totalNumber,
         subtotalPrice: thisCart.subtotalPrice,
         deliveryFee: thisCart.deliveryFee,
