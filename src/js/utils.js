@@ -54,5 +54,5 @@ Handlebars.registerHelper('joinValues', function(input, options) {
   return Object.values(input).join(options.fn(this));
 });
 
-export default Handlebars;
+export default utils;
 
