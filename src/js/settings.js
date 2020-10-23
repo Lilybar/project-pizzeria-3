@@ -30,15 +30,15 @@ export const select = {
       input: 'input.amount',
       linkDecrease: 'a[href="#less"]',
       linkIncrease: 'a[href="#more"]',
-      datePicker: {
-        wrapper: '.date-picker',
-        input: `input[name="date"]`,
-      },
-      hourPicker: {
-        wrapper: '.hour-picker',
-        input: 'input[type="range"]',
-        output: '.output',
-      },
+    },
+    datePicker: {
+      wrapper: '.date-picker',
+      input: `input[name="date"]`,
+    },
+    hourPicker: {
+      wrapper: '.hour-picker',
+      input: 'input[type="range"]',
+      output: '.output',
     },
   },
 
@@ -104,6 +104,7 @@ export const settings = {
   datePicker: {
     maxDaysInFuture: 14,
   },
+
   cart: {
     defaultDeliveryFee: 20,
   },
